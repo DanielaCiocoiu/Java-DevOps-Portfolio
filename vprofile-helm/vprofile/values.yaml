@@ -1,0 +1,96 @@
+app:
+  name: vprofile-app
+  image: vprocontainers/vprofileapp
+  tag: latest
+  replicas: 1
+  containerPort: 8080
+  servicePort: 8080
+  defaultUser: ""
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "250m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+
+db:
+  image: vprocontainers/vprofiledb
+  tag: latest
+  replicas: 1
+  containerPort: 3306
+  servicePort: 3306
+  storageClass: gp2
+  storageSize: 3Gi
+  defaultUser: ""
+  password: REDACTED
+  rootPassword: REDACTED
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "500m"
+    limits:
+      memory: "1Gi"
+      cpu: "1000m"
+
+memcached:
+  enabled: true
+  image: memcached
+  tag: latest
+  replicas: 1
+  containerPort: 11211
+  servicePort: 11211
+  defaultUser: ""
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+    limits:
+      memory: "256Mi"
+      cpu: "200m"
+
+rabbitmq:
+  image: rabbitmq
+  tag: latest
+  replicas: 1
+  containerPort: 5672
+  servicePort: 5672
+  password: REDACTED
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "200m"
+    limits:
+      memory: "512Mi"
+      cpu: "400m"
+
+initcontainers:
+  dbCleanupImage: busybox
+  appWaitImage: busybox
+  dbCleanupCommand: rm -rf /var/lib/mysql/lost+found
+  appWaitCommand: until nslookup vprocache01; do echo waiting for memcached; sleep 2; done
+  memcachedWaitCommand: until nslookup vprocache01; do echo waiting for memcached; sleep 2; done
+  resources:
+    requests:
+      memory: "64Mi"
+      cpu: "50m"
+    limits:
+      memory: "128Mi"
+      cpu: "100m"
+
+ingress:
+  enabled: true
+  host: vprofile.hkhinfoggg.online
+  servicePort: 8080
+
+secrets:
+  enabled: true
+  dbPassword: REDACTED
+  rmqPassword: REDACTED
+
+dockerregistry:
+  enabled: false
+  server: myregistry.com
+  username: myuser
+  password: REDACTED
+  email: myemail@example.com

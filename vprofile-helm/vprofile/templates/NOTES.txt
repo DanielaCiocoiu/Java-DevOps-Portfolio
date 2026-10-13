@@ -1,0 +1,9 @@
+# vprofile Helm Chart
+
+Thank you for installing the vprofile chart!
+
+## Accessing the Application
+
+To access the application, you can use the following commands:
+
+1. Get the list of services:

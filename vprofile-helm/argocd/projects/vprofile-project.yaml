@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: vprofile
+  namespace: argocd
+spec:
+  description: vProfile application project
+  sourceRepos:
+    - git@github.com:DanielaCiocoiu/vprofile-helm.git
+  destinations:
+    - namespace: vprofile
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"

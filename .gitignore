@@ -1,0 +1,63 @@
+# Git metadata
+.git/
+**/.git/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.venv/
+venv/
+
+# Node / frontend
+node_modules/
+.npm/
+
+# Java / build outputs
+**/target/
+**/target/**
+**/build/
+**/dist/
+**/out/
+**/*.class
+**/*.war
+**/*.jar
+
+# Terraform
+.terraform/
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.lock.hcl
+.terraform.lock.hcl
+.terraform.tfstate.lock.info
+
+# Secrets and credentials
+.env
+.env.*
+*.pem
+*.key
+*.crt
+*.csr
+*.p12
+*.pfx
+*.der
+*.jks
+*.keystore
+*.p8
+*.pub
+id_rsa
+id_rsa.pub
+*.tfvars
+*.tfvars.json
+*.bak
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+*.log

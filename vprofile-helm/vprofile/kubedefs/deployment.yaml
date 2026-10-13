@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.name }}
+  labels:
+    app: {{ .Values.app.name }}
+spec:
+  replicas: {{ .Values.app.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.app.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.app.name }}
+    spec:
+      containers:
+        - name: {{ .Values.app.name }}
+          image: {{ .Values.app.image }}:{{ .Values.app.tag }}
+          ports:
+            - containerPort: {{ .Values.app.containerPort }}
+          env:
+            # Add environment variables here
+            - name: ENV_VAR_NAME
+              value: "value"
+      {{- if .Values.dockerregistry.enabled }}
+      imagePullSecrets:
+        - name: {{ .Values.dockerregistry.secretName }}
+      {{- end }}

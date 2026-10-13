@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-config
+data:
+  # Add your key-value pairs here
+  example-key: {{ .Values.app.exampleKey | quote }}
+  another-key: {{ .Values.app.anotherKey | quote }}

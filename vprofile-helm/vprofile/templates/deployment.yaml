@@ -1,0 +1,145 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.name | default "vprofile-app" }}
+  labels:
+     app: {{ .Values.app.name | default "vprofile-app" }}
+spec:
+  replicas: {{ .Values.app.replicas | default 1 }}
+  selector:
+    matchLabels:
+      app: {{ .Values.app.name | default "vprofile-app" }}
+  template:
+    metadata:
+      labels:
+         app: {{ .Values.app.name | default "vprofile-app" }}
+    spec:
+      containers:
+      - name: vprofile-app
+        image: "{{ .Values.app.image }}:{{ .Values.app.tag | default "latest" }}"
+        ports:
+        - containerPort: {{ .Values.app.containerPort | default 8080 }}
+        env:
+        - name: DB_HOST
+          value: vprodb
+        - name: DB_USER
+          value: "vpro"
+        - name: DB_PASSWORD
+          value: {{ .Values.secrets.dbPassword | default "REDACTED" }}
+        - name: DB_NAME
+          value: "accounts"
+        - name: RMQ_HOST
+          value: vpromq01
+        - name: RMQ_USER
+          value: "guest"
+        - name: RMQ_PASSWORD
+          value: {{ .Values.secrets.rmqPassword | default "guest" }}
+        - name: MEMCACHED_HOST
+          value: vprocache01
+        resources:
+          requests:
+            memory: {{ .Values.app.resources.requests.memory | default "256Mi" }}
+            cpu: {{ .Values.app.resources.requests.cpu | default "250m" }}
+          limits:
+            memory: {{ .Values.app.resources.limits.memory | default "512Mi" }}
+            cpu: {{ .Values.app.resources.limits.cpu | default "500m" }}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vprofile-db
+  labels:
+    app: vprofile-db
+spec:
+  replicas: {{ .Values.db.replicas | default 1 }}
+  selector:
+    matchLabels:
+      app: vprofile-db
+  template:
+    metadata:
+      labels:
+        app: vprofile-db
+    spec:
+      containers:
+      - name: db
+        image: "{{ .Values.db.image }}:{{ .Values.db.tag | default "latest" }}"
+        ports:
+        - containerPort: {{ .Values.db.containerPort | default 3306 }}
+        env:
+        - name: REDACTED
+          value: {{ .Values.db.rootPassword | default "REDACTED" }}
+        - name: MYSQL_DATABASE
+          value: "accounts"
+        resources:
+          requests:
+            memory: {{ .Values.db.resources.requests.memory | default "256Mi" }}
+            cpu: {{ .Values.db.resources.requests.cpu | default "250m" }}
+          limits:
+            memory: {{ .Values.db.resources.limits.memory | default "512Mi" }}
+            cpu: {{ .Values.db.resources.limits.cpu | default "500m" }}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vprofile-memcached
+  labels:
+    app: vprofile-memcached
+spec:
+  replicas: {{ .Values.memcached.replicas | default 1 }}
+  selector:
+    matchLabels:
+      app: vprofile-memcached
+  template:
+    metadata:
+      labels:
+        app: vprofile-memcached
+    spec:
+      containers:
+      - name: memcached
+        image: "{{ .Values.memcached.image | default "memcached" }}:{{ .Values.memcached.tag | default "latest" }}"
+        ports:
+        - containerPort: {{ .Values.memcached.containerPort | default 11211 }}
+        resources:
+          requests:
+            memory: {{ .Values.memcached.resources.requests.memory | default "128Mi" }}
+            cpu: {{ .Values.memcached.resources.requests.cpu | default "100m" }}
+          limits:
+            memory: {{ .Values.memcached.resources.limits.memory | default "256Mi" }}
+            cpu: {{ .Values.memcached.resources.limits.cpu | default "200m" }}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vprofile-rabbitmq
+  labels:
+    app: vprofile-rabbitmq
+spec:
+  replicas: {{ .Values.rabbitmq.replicas | default 1 }}
+  selector:
+    matchLabels:
+      app: vprofile-rabbitmq
+  template:
+    metadata:
+      labels:
+        app: vprofile-rabbitmq
+    spec:
+      containers:
+      - name: rabbitmq
+        image: "{{ .Values.rabbitmq.image | default "rabbitmq" }}:{{ .Values.rabbitmq.tag | default "latest" }}"
+        ports:
+        - containerPort: {{ .Values.rabbitmq.containerPort | default 5672 }}
+        env:
+        - name: RABBITMQ_DEFAULT_USER
+          value: "guest"
+        - name: RABBITMQ_DEFAULT_PASS
+          value: {{ .Values.rabbitmq.password | default "guest" }}
+        resources:
+          requests:
+            memory: {{ .Values.rabbitmq.resources.requests.memory | default "256Mi" }}
+            cpu: {{ .Values.rabbitmq.resources.requests.cpu | default "200m" }}
+          limits:
+            memory: {{ .Values.rabbitmq.resources.limits.memory | default "512Mi" }}
+            cpu: {{ .Values.rabbitmq.resources.limits.cpu | default "400m" }}
