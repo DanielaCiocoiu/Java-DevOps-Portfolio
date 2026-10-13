@@ -1,17 +1,19 @@
-# GitOps Portfolio – VProfile Demo
+# Java & DevOps Portfolio – VProfile Cloud Demo
 
-A clean, recruiter-friendly GitOps and cloud deployment portfolio showcasing a Java web application (`vprofile-app`), Terraform infrastructure (`vprofile-infra`), and Helm deployment manifests (`vprofile-helm`).
+A recruiter-friendly portfolio project that demonstrates a Java backend in a cloud-native DevOps environment. It combines a Spring-based application, containerization, Kubernetes deployment, and infrastructure automation to reflect a Java + DevOps role profile.
 
 ## Overview
-This project demonstrates a full DevOps workflow across:
-- Java web application packaging and deployment
-- Terraform-based AWS EKS infrastructure provisioning
-- Helm-based Kubernetes application deployment
-- CI/CD readiness with secrets managed outside the repository
+This project showcases a full-stack cloud engineering workflow across:
+- Java backend development with Spring MVC / Spring Security / JPA
+- Microservice-oriented application structure and deployment patterns
+- Docker-based packaging and runtime configuration
+- Kubernetes deployment using Helm
+- Terraform provisioning for AWS/EKS infrastructure
+- CI/CD-oriented repository structure for real-world delivery
 
 ## Project Structure
-- `vprofile-app/` – Java Spring MVC application
-- `vprofile-infra/` – Terraform code for AWS/EKS foundation
+- `vprofile-app/` – Java application with backend logic, configuration, and deployment packaging
+- `vprofile-infra/` – Terraform code for AWS and EKS setup
 - `vprofile-helm/` – Helm chart for Kubernetes deployment
 - `.gitignore` – excludes build output, Terraform state, and secret material
 
@@ -20,41 +22,52 @@ This project demonstrates a full DevOps workflow across:
 - Spring MVC / Spring Security / JPA
 - Maven
 - Docker
-- EKS / AWS
-- Terraform
-- Helm
 - Kubernetes
+- Helm
+- AWS / EKS
+- Terraform
+- GitHub-based workflow automation
 
 ## What This Shows
-- Infrastructure as Code with Terraform
-- Containerized application deployment
-- Kubernetes packaging with Helm
-- GitOps-oriented repo structure for demos and interviews
+- Java backend development in a production-style environment
+- Containerization and deployment automation
+- Kubernetes-based orchestration and application packaging
+- Infrastructure as Code for cloud environments
+- DevOps practices relevant to Java engineering roles
+
+## Why This Is Relevant for Java + DevOps Roles
+This repository is designed to highlight experience with:
+- building and packaging Java applications
+- working with infrastructure automation and cloud services
+- deploying applications in Kubernetes environments
+- managing configuration and environment separation
+- collaborating in Git-based DevOps workflows
 
 ## Important Notes
-This repository is intentionally sanitized for public sharing and does not contain any production credentials, secrets, private keys, AWS access keys, or environment-specific values.
+This repository is intentionally sanitized for public sharing and does not contain production credentials, secrets, private keys, AWS access keys, or environment-specific values.
 
-Before deploying in a real environment, configure secrets via:
+For real deployments, secrets should be provided through:
 - GitHub Actions Secrets
 - Kubernetes Secrets
-- AWS Secrets Manager / SSM Parameter Store
-- Environment variables or a secret manager of your choice
+- AWS Secrets Manager or SSM Parameter Store
+- Environment variables managed outside the repository
 
 ## Local Setup
 1. Open the relevant project folder.
-2. Follow the application/infrastructure instructions inside each project.
-3. For real deployments, inject secrets externally instead of committing them to Git.
+2. Review the Java app configuration and deployment manifests.
+3. Adapt the infrastructure and chart values to your own environment.
+4. Inject secrets externally rather than committing them to Git.
 
 ## Security
-This repo is designed for public visibility and portfolio use. It intentionally avoids storing:
+This repo is created for public portfolio use and intentionally excludes:
 - AWS access keys
 - database passwords
-- private SSH keys
+- SSH keys
 - Terraform state files
 - `.env` files
 
 ## Future Enhancements
-- Add GitHub Actions CI/CD workflow
-- Add monitoring and observability
-- Add Kubernetes ingress and TLS configuration
-- Add automated deployment validation and smoke tests
+- Add GitHub Actions CI/CD workflows
+- Add automated tests and deployment checks
+- Add monitoring, logging, and observability
+- Extend with additional microservice patterns and Kubernetes best practices
